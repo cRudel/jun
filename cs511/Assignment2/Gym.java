@@ -22,6 +22,9 @@ public class Gym implements Runnable
 
 	public Gym()
 	{
-
+		noOfWeightPlates = new HashMap<>();
+		noOfWeightPlates.put(WeightPlateSize.SMALL_3KG, 110);
+		noOfWeightPlates.put(WeightPlateSize.MEDIUM_5KG, 90);
+		noOfWeightPlates.put(WeightPlateSize.LARGE_10KG, 75);
 	}
 }

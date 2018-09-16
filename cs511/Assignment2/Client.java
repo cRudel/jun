@@ -12,7 +12,7 @@ public class Client
 	public Client(int id)
 	{
 		this.id = id;
-		routine = new ArrayList<>();
+		this.routine = new ArrayList<>();
 	}
 
 	public void addExercise(Exercise e)
@@ -22,7 +22,9 @@ public class Client
 
 	public static Client generateRandom(int id, Map<WeightPlateSize, Integer> noOfWeightPlates)
 	{
-		//todo: impement
-		return null;
+		Client ret = new Client(id);
+		//what do we do with the second parameter
+		return ret;
+
 	}
 }
