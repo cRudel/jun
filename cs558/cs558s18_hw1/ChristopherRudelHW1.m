@@ -10,9 +10,9 @@ planeSobel = filter('sobel', plane, 115);
 kangarooSobel = filter('sobel', kangaroo, 200);
 
 %helppp
-nmxPlane = nonMaxSupp(magnitude(plane), direction(plane)); 
+help = nonMaxSupp(red);
 figure,imshow(nmxPlane);
-figure,imshow(imgradient(red));
+%figure,imshow(imgradient(red));
 end
 
 function f=filter(type,pic,threshold)
@@ -68,46 +68,55 @@ function i = magnitude(image)
     
 end
 
-function i = direction(image)
+function output = nonMaxSupp(image)
     I = double(image);
     for i=1:size(I,1)-2
     for j=1:size(I,2)-2
         Gx=((2*I(i+2,j+1)+I(i+2,j)+I(i+2,j+2))-(2*I(i,j+1)+I(i,j)+I(i,j+2)));
         Gy=((2*I(i+1,j+2)+I(i,j+2)+I(i+2,j+2))-(2*I(i+1,j)+I(i,j)+I(i+2,j)));
-        theta(i,j) = atand(Gy/Gx);
+        grad(i,j)=sqrt(Gx.^2+Gy.^2);
     end
     end
-    i=theta;
-end
-
-
- function [ marks ] = nonMaxSupp( mag,dir )
-    [m,n]=size(mag);
-    marks=uint8(ones(size(mag)));
-    for i=2:m-1
-        for j=2:n-1
-            if mag(i,j) ~=0
-               angle=dir(i,j)+180;
-               if (angle>=340 || angle<=22.5) || (angle>=157.5 && angle<=202.5)  %horizontal
-                if (mag(i,j+1)>mag(i,j)) || (mag(i,j-1)>mag(i,j))
-                    marks(i,j)=0;
+    angle = atan2(Gy,Gx)*180/pi;
+    
+    [height, width] = size(I);
+    output = zeros(height,width);
+    for i=1:height-2 % row
+        for j=1:width-2 % col         
+            if (angle(i,j)>=-22.5 && angle(i,j)<=22.5) || ...
+                (angle(i,j)<-157.5 && angle(i,j)>=-180)
+                if (grad(i,j) >= grad(i,j+1)) && ...
+                   (grad(i,j) >= grad(i,j-1))
+                    output(i,j)= grad(i,j);
+                else
+                    output(i,j)=0;
                 end
-
-            elseif (angle>22.5 && angle<=67.5) || (angle>202.5 && angle<=247.5) %45
-                 if (mag(i+1,j+1)>mag(i,j)) || (mag(i-1,j-1)>mag(i,j))
-                    marks(i,j)=0;
-                 end
-            elseif (angle>67.5 && angle<=112.5) || (angle>247.5 && angle<=292.5) %vertical
-                 if (mag(i-1,j)>mag(i,j)) ||(mag(i+1,j)>mag(i,j))
-                    marks(i,j)=0;
+            elseif (angle(i,j)>=22.5 && angle(i,j)<=67.5) || ...
+                (angle(i,j)<-112.5 && angle(i,j)>=-157.5)
+                if (grad(i,j) >= grad(i+1,j+1)) && ...
+                   (grad(i,j) >= grad(i-1,j-1))
+                    output(i,j)= grad(i,j);
+                else
+                    output(i,j)=0;
                 end
-            else %135
-                 if (mag(i-1,j+1)>mag(i,j)) || (mag(i+1,j-1)>mag(i,j))
-                    marks(i,j)=0;
-                 end
-               end
+            elseif (angle(i,j)>=67.5 && angle(i,j)<=112.5) || ...
+                (angle(i,j)<-67.5 && angle(i,j)>=-112.5)
+                if (grad(i,j) >= grad(i+1,j)) && ...
+                   (grad(i,j) >= grad(i-1,j))
+                    output(i,j)= grad(i,j);
+                else
+                    output(i,j)=0;
+                end
+            elseif (angle(i,j)>=112.5 && angle(i,j)<=157.5) || ...
+                (angle(i,j)<-22.5 && angle(i,j)>=-67.5)
+                if (grad(i,j) >= grad(i+1,j-1)) && ...
+                   (grad(i,j) >= grad(i-1,j+1))
+                    output(i,j)= grad(i,j);
+                else
+                    output(i,j)=0;
+                end
             end
-        end 
+        end
     end
-
 end
+
