@@ -10,20 +10,25 @@ kangarooGauss = filter('gaussian', kangaroo, 0, sigma);
 redSobel = filter('sobel', red, 250);
 planeSobel = filter('sobel', plane, 115);
 kangarooSobel = filter('sobel', kangaroo, 200);
-redNMS = nonMaxSupp(red);
-planeNMS = nonMaxSupp(plane);
-kangarooNMS = nonMaxSupp(kangaroo);
+redNMS = nonMaxSupp(red, 250);
+planeNMS = nonMaxSupp(plane, 115);
+kangarooNMS = nonMaxSupp(kangaroo, 200);
 %{
-figure,imshow(redGauss); title('Gaussian filter on red image');
-figure,imshow(planeGauss); title('Gaussian filter on plane image');
-figure,imshow(kangarooGauss); title('Gaussian filter on kangaroo image');
+figure,imshow(redGauss); title('Gaussian filter on red image with sigma = 8');
+figure,imshow(planeGauss); title('Gaussian filter on plane image with sigma = 8');
+figure,imshow(kangarooGauss); title('Gaussian filter on kangaroo image with sigma = 8');
+
 figure,imshow(redSobel); title('Sobel Edge Detection on red image');
 figure,imshow(planeSobel); title('Sobel Edge Detection on plane image');
 figure,imshow(kangarooSobel); title('Sobel Edge Detection on kangaroo image');
+
 figure,imshow(redNMS); title('Non-Maximum Suppression on red image');
 figure,imshow(planeNMS); title('Non-Maximum Suppression on plane image');
 figure,imshow(kangarooNMS); title('Non-Maximum Suppression on kangaroo image');
 %}
+
+figure,imshow(redSobel); title('Sobel Edge Detection on red image');
+
 end
 
 function f=filter(type,pic,threshold, sigma)
@@ -77,8 +82,9 @@ function i = magnitude(image)
     
 end
 
-function output = nonMaxSupp(image)
-    I = double(image);
+function output = nonMaxSupp(image, threshold)
+    I = filter('sobel', image, threshold, 0);
+    I = double(I);
 %   I would have liked to call magnitude but we needed dx and dy to compute
 %   the angle
     for i=1:size(I,1)-2
