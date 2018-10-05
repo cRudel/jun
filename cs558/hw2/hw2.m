@@ -1,5 +1,6 @@
 i = imread('road.png');
 % figure,imshow(i);
+% smooth before derivatives
 I = double(i);
 gaussRoad = filter('gaussian', I, 0, 2);
 % figure,imshow(gaussRoad);
