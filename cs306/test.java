@@ -8,10 +8,10 @@ class test
 	public static void main(String[] args)
 	{
 		Map<Character, Integer> letters = new HashMap<>();
-		File file = new File("ciphertext.txt");
+		File file = new File("ciphertext1.txt");
 		try {
 		Scanner sc = new Scanner(file);
-		String[] lines = new String[11];
+		String[] lines = new String[4];
 		double total = 0;
 		for(int i=0; sc.hasNextLine(); i++)
 		{
@@ -42,7 +42,7 @@ class test
 			System.out.printf("%.4f", percent*100);		
 			System.out.println("%");
 			}
-			printGuess(lines);
+//			printGuess(lines);
 			sc.close();
 		} catch (FileNotFoundException error) {
 			error.printStackTrace();
