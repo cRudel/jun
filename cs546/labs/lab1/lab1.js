@@ -3,13 +3,20 @@ const questionOne = function questionOne(arr) {
     let sum = 0;
     for(let i=0; i<arr.length; i++)
     {
-        sum += arr[i] * arr[i];
+        if(Number.isInteger(arr[i]) == false){
+            throw "Error: please make sure all values are integers";
+        }else{
+            sum += arr[i] * arr[i];
+        }
     }
     return sum;
 }
 
 const questionTwo = function questionTwo(num) { 
     //fibonacci 
+    if(Number.isInteger(num) == false){
+        throw "Error: please input an integer";
+    }
     if(num <= 0)
         return 0;
     else if(num == 1)
@@ -21,6 +28,9 @@ const questionTwo = function questionTwo(num) {
 
 const questionThree = function questionThree(text) {
     //counting vowels not including y
+    if(typeof text != "string" && typeof text!= "character"){
+        throw "Error, please enter a string or character";
+    }
     let count = 0;
     let lowerText = text.toLowerCase();
     for(let i=0; i<lowerText.length; i++)
@@ -34,6 +44,10 @@ const questionThree = function questionThree(text) {
 
 const questionFour = function questionFour(num) {
     //factorial
+    if(Number.isInteger(num) == false){
+        throw "Error: please input an integer";
+    }   /*I think there is a way to compute the factorial of a non-integer number but
+          I think that would be way above the expected complexity of the function */
     if(num < 0)
         return NaN;
     else if(num == 0 || num == 1)
