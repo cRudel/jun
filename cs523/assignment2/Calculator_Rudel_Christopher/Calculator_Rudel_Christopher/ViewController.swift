@@ -129,17 +129,17 @@ class ViewController: UIViewController {
         let second = Double(secondNumber) ?? 0
         // "?? 0" means that 0 is the default value
         if(operand == "+"){
-            result = String(format:"%f", first + second)
+            result = String(format:"%g", first + second)
         }else if(operand == "-"){
-            result = String(format:"%f", first - second)
+            result = String(format:"%g", first - second)
         }else if(operand == "/"){
             if(second == 0){
                 result = "Divide by 0 error"
             }else{
-                result = String(format:"%f", first / second)
+                result = String(format:"%g", first / second)
             }
         }else{
-            result = String(format:"%f", first * second)
+            result = String(format:"%g", first * second)
         }
         myOutputLabel.text = result
         //print(result)

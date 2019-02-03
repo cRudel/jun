@@ -1,3 +1,10 @@
+/*
+*   Christopher Rudel
+*   CS546
+*   lab1.js
+*   I pledge my honor that I have abided by the Stevens Honor System
+*/
+
 const questionOne = function questionOne(arr) {
     //sum of squares
     let sum = 0;
