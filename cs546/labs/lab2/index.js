@@ -59,5 +59,13 @@ try{
     console.log("Head failed successfully");
 }
 //finish me
-const test = arrayUtils.range(10, false);
+const test = arrayUtils.range(4, true);
 console.log(test);
+
+const arrayCount = arrayUtils.countElements([13, '13', 13, 'hello', true, true]);
+const stringCount = stringUtils.countChars("");
+/*
+const equalTest = arrayUtils.isEqual([1, 2, 3], [1,2,3]);
+const stringCap = stringUtils.capitalize('monday tuesday wednesday thursday');
+const stringRep = stringUtils.repeat("", 1);*/
+console.log(stringCount);
