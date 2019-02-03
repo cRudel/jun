@@ -48,11 +48,23 @@ const remove = function remove(arr, index) {
 }
 
 const range = function range(end, value) {
-	if(Number.isInteger(end)){
+	if(!Number.isInteger(end)){ // integers will get past this and so will doubles like 1.0
 		console.log("ahh");
 	}
 	else{
-		console.log("yes");
+		if(end <= 0){
+			throw "Error: please enter a number greater than 0";
+		}
+		let retMe = new Array(end);
+		if(value === undefined || value === null){
+			for(let i = 0; i < retMe.length; i++){
+				retMe[i] = i;
+			}
+			
+		} else{
+			retMe.fill(value);
+		}
+		return retMe;
 	}
 }
 

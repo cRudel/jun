@@ -59,4 +59,5 @@ try{
     console.log("Head failed successfully");
 }
 
-const test = arrayUtils.range(1);
+const test = arrayUtils.range(10, false);
+console.log(test);
