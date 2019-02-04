@@ -43,6 +43,8 @@ const countChars = function countChars(str) {
   }
   // the assignment said we can use a past function to help 
   const arrayUtils = require("./arrayUtils");
+  console.log("here");
+  console.log(arrayUtils);
   let strArray = new Array(str.length);
   for(let i=0; i<str.length; i++){
     strArray[i] = str.charAt(i);
