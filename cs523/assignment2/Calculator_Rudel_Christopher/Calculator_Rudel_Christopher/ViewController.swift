@@ -142,6 +142,10 @@ class ViewController: UIViewController {
             result = String(format:"%g", first * second)
         }
         myOutputLabel.text = result
+        firstNumber = result
+        secondNumber = ""
+        operand = ""
+        result = ""
         //print(result)
     }
     
