@@ -7,6 +7,7 @@
 
 const arrayUtils = require("./arrayUtils");
 const stringUtils = require("./stringUtils");
+const objUtils = require("./objUtils");
 
 // Head tests
 try{
@@ -69,3 +70,5 @@ const equalTest = arrayUtils.isEqual([1, 2, 3], [1,2,3]);
 const stringCap = stringUtils.capitalize('monday tuesday wednesday thursday');
 const stringRep = stringUtils.repeat("", 1);*/
 console.log(stringCount);
+
+const objTest = objUtils.extend(1,2,3,'yo', false, 'mios');
