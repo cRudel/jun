@@ -71,4 +71,9 @@ const stringCap = stringUtils.capitalize('monday tuesday wednesday thursday');
 const stringRep = stringUtils.repeat("", 1);*/
 console.log(stringCount);
 
-const objTest = objUtils.extend(1,2,3,'yo', false, 'mios');
+const first = { x: 2, y: 3};
+const second = { a: 70, x: 4, z: 5 };
+const third = { x: 0, y: 9, q: 10 };
+
+const objTest = objUtils.smush(third, first, second);
+console.log(objTest);
