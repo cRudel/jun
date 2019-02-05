@@ -5,20 +5,27 @@
 *   I pledge my honor that I have abided by the Stevens Honor System
 */
 
-//todo: finish
+//todo: arg checking
 const extend = function extend(...theArgs){
-    console.log(theArgs);
+    //console.log(theArgs);
     let retMe = {};
     let keys = new Array(theArgs.length);
-    let arr = [];
+    let keyArr = [];
+    let valueArr = [];
     for(let i=0; i<theArgs.length; i++){
-        arr = arr.concat(Object.keys(theArgs[i]));
-        // this takes all the keys and puts them into an array
+        keyArr = keyArr.concat(Object.keys(theArgs[i])); // this takes all the keys and puts them into an array
+        valueArr = valueArr.concat(Object.values(theArgs[i])); // this takes all the values and puts them into an array
     }
-    let merged = {...theArgs[0], ...theArgs[1]};
-    merged = {...merged, ...theArgs[2]};
-    console.log(merged);
 
+    for(let i=0; i<keyArr.length; i++){
+        if(keyArr[i] in retMe){
+            continue;
+        }else{
+            retMe[keyArr[i]] = valueArr[i];
+        }
+    }
+
+    console.log(retMe);
 }
 
 //todo: arg checking

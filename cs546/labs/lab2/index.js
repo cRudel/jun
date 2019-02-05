@@ -75,5 +75,5 @@ const first = { x: 2, y: 3};
 const second = { a: 70, x: 4, z: 5 };
 const third = { x: 0, y: 9, q: 10 };
 
-const objTest = objUtils.smush(third, first, second);
+const objTest = objUtils.smush(second, third);
 console.log(objTest);
