@@ -7,7 +7,17 @@
 
 //todo: arg checking
 const extend = function extend(...theArgs){
-    //console.log(theArgs);
+    if(theArgs.length < 2){
+        throw "Error: please ensure there is at least 2 arguments for function extend";
+    } else{
+        for(let i=0; i<theArgs.length; i++){
+            if(theArgs[i].constructor !== Object){
+                throw "Error: please ensure all arguments are of type Object for function extend";
+            }else if(Object.entries(theArgs[i]).length === 0 || theArgs[i] === undefined){
+                throw "Error: please ensure all objects are non empty for function extend";
+            }
+        }
+    }
     let retMe = {};
     let keys = new Array(theArgs.length);
     let keyArr = [];
@@ -25,11 +35,22 @@ const extend = function extend(...theArgs){
         }
     }
 
-    console.log(retMe);
+    return retMe;
 }
 
 //todo: arg checking
 const smush = function smush(...theArgs){
+    if(theArgs.length < 2){
+        throw "Error: please ensure there is at least 2 arguments for function smush";
+    } else{
+        for(let i=0; i<theArgs.length; i++){
+            if(theArgs[i].constructor !== Object){
+                throw "Error: please ensure all arguments are of type Object for function smush";
+            }else if(Object.entries(theArgs[i]).length === 0 || theArgs[i] === undefined){
+                throw "Error: please ensure all objects are non empty for function smush";
+            }
+        }
+    }
     let retMe = {};
     for(let i=0; i<theArgs.length; i++){
         retMe = {...retMe, ...theArgs[i]};
@@ -40,7 +61,23 @@ const smush = function smush(...theArgs){
 
 //todo: finish
 const mapValues = function mapValues(obj, func){
+    if(typeof obj !== "object"){
+        throw "Error: please ensure the first argument is of type Object for function mapValues";
+    } else if(Object.entries(obj).length === 0 || obj === undefined){
+        throw "Error: please ensure the object provided is non empty for function mapValues";
+    } else if(typeof func !== "function" || func === undefined){
+        throw "Error: please ensure the second argument is of type Function for function mapValues";
+    }
     
+    let retMe = {};
+    for(let objKey in obj){
+        retMe[objKey] = func(obj[objKey]);
+    }
+    return retMe;
+
+    // there was probably a way to do something this elegant for the function extend
+    // but what i did works so no point in going back to try and make it elegant
+    // i might break it
 }
 
 module.exports = {

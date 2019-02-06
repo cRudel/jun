@@ -64,7 +64,7 @@ const test = arrayUtils.range(4, true);
 console.log(test);
 
 const arrayCount = arrayUtils.countElements([13, '13', 13, 'hello', true, true]);
-const stringCount = stringUtils.countChars("");
+const stringCount = stringUtils.countChars("abcdefa");
 /*
 const equalTest = arrayUtils.isEqual([1, 2, 3], [1,2,3]);
 const stringCap = stringUtils.capitalize('monday tuesday wednesday thursday');
@@ -75,5 +75,10 @@ const first = { x: 2, y: 3};
 const second = { a: 70, x: 4, z: 5 };
 const third = { x: 0, y: 9, q: 10 };
 
-const objTest = objUtils.smush(second, third);
-console.log(objTest);
+//const objTest = objUtils.extend(second, third);
+//console.log(objTest);
+//const objTestBad = objUtils.extend(first, second);
+const objTest = objUtils.smush(first, second);
+
+const objMap = objUtils.mapValues({a: 1, b: 2, c: 3}, n => n*8);
+console.log(objMap);
