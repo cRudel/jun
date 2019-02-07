@@ -39,7 +39,7 @@ const repeat = function repeat(str, num) {
 
 const countChars = function countChars(str) {
   if(str === undefined || str === null || typeof str != "string"){
-    throw "Error: please input a string for function repeat";
+    throw "Error: please input a string for function countChars";
   }
   // the assignment said we can use a past function to help 
   const arrayUtils = require("./arrayUtils");

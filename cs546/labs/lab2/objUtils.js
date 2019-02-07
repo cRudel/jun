@@ -5,7 +5,6 @@
 *   I pledge my honor that I have abided by the Stevens Honor System
 */
 
-//todo: arg checking
 const extend = function extend(...theArgs){
     if(theArgs.length < 2){
         throw "Error: please ensure there is at least 2 arguments for function extend";
@@ -38,7 +37,6 @@ const extend = function extend(...theArgs){
     return retMe;
 }
 
-//todo: arg checking
 const smush = function smush(...theArgs){
     if(theArgs.length < 2){
         throw "Error: please ensure there is at least 2 arguments for function smush";
@@ -59,7 +57,6 @@ const smush = function smush(...theArgs){
     return retMe;
 }
 
-//todo: finish
 const mapValues = function mapValues(obj, func){
     if(typeof obj !== "object"){
         throw "Error: please ensure the first argument is of type Object for function mapValues";

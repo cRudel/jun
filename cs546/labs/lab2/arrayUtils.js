@@ -35,7 +35,7 @@ const remove = function remove(arr, index) {
 	else if(arr.length == 0){
 		throw "Error: please input a non empty array for function remove";
 	}
-	else if(index > arr.length || index < 0){
+	else if(index >= arr.length || index < 0){
 		throw "Error: please ensure the index is within the bounds of the array for function remove";
 	}
 	else if(isNaN(index) || index === null || index === undefined){
@@ -49,7 +49,7 @@ const remove = function remove(arr, index) {
 
 const range = function range(end, value) {
 	if(!Number.isInteger(end)){ // integers will get past this and so will doubles like 1.0
-		throw "Error: please ensure the length is a valid number > 0 for function range";
+		throw "Error: please ensure the length is a valid integer > 0 for function range";
 	}
 	else{
 		if(end <= 0){
