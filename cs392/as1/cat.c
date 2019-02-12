@@ -23,7 +23,7 @@ int main(int argc, char** argv){
     size_t sz;
     char *ptr;
 
-    FILE *fp = fopen(argv[1], "r");
+    FILE *fp = fopen(argv[1], "rb");
     if(fp == NULL){
         printf("Cannot open file due to error %d\n", errno);
         exit(EXIT_FAILURE);

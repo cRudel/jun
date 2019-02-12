@@ -15,7 +15,7 @@ int* readIntoArray(char* filename){
     char* str;
     int* arr;
     size_t sz;
-    FILE *fp = fopen(filename, "r");
+    FILE *fp = fopen(filename, "rb");
     if(fp == NULL){
         printf("Cannot open file due to error %d\n", errno);
         exit(EXIT_FAILURE);
@@ -88,16 +88,39 @@ void heapSort(int* arr, int n){
     }
 }
 
+int decToBin(int n){
+  int binNum = 0;
+  int remainder, i = 1, step = 1;
+    while (n!=0)
+    {
+        remainder = n%2;
+        n /= 2;
+        binNum += remainder*i;
+        i *= 10;
+    }
+    return binNum;
+}
+void convertNums(int* nums, int size){
+  for(int i=0; i<size; i++){
+      int temp = decToBin(nums[i]);
+      nums[i] = temp;
+  }
+}
 
 void outputToFile(int* nums, char* file){
-  FILE *fp = fopen(file, "w");
+  /*printf("output:\n");
+  char str[20];
+  for(int i=0; i<arrLength; i++){
+    snprintf(str, 10, "%d", nums[i]);
+  }*/
+  FILE *fp = fopen(file, "wb");
   if(fp == NULL){
       printf("Cannot open file due to error %d\n", errno);
       exit(EXIT_FAILURE);
   }
-  int test = 1024;
-  fwrite(&test, sizeof(int), 1, fp);
-
+  char* test = "655336";
+  fwrite(test, sizeof(test), 1, fp);
+  
 }
 
 int main(int argc, char** argv){
@@ -107,14 +130,19 @@ int main(int argc, char** argv){
     }
     arrLength = 0;
     int *myNums = readIntoArray(argv[1]);
-
+/*
     for(ulong i=0; i<arrLength; i++){
       printf("%lu: %d\n", i, myNums[i]);
     }
-
+*/
 
     heapSort(myNums, arrLength);
-
+    printf("sorted:\n");
+    for(ulong i=0; i<arrLength; i++){
+      printf("%lu: %d\n", i, myNums[i]);
+    }
+    convertNums(myNums, arrLength);
+    printf("binary:\n");
     for(ulong i=0; i<arrLength; i++){
       printf("%lu: %d\n", i, myNums[i]);
     }
