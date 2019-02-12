@@ -113,16 +113,17 @@ void outputToFile(int* nums, char* file){
   for(int i=0; i<arrLength; i++){
     snprintf(str, 10, "%d", nums[i]);
   }*/
-  FILE *fp = fopen(file, "w+b");
+  FILE *fp = fopen(file, "wb");
   if(fp == NULL){
       printf("Cannot open file due to error %d\n", errno);
       exit(EXIT_FAILURE);
   }
-  char str[20];
   for(int i=0; i<arrLength; i++){
+	char str[sizeof(nums[i])];
 	snprintf(str, 10, "%d\n", nums[i]);
-  	fwrite(&str, sizeof(str), 1, fp);
+  	fputs(str, fp);
   }
+  fclose(fp);
 }
 
 int main(int argc, char** argv){
@@ -132,22 +133,13 @@ int main(int argc, char** argv){
     }
     arrLength = 0;
     int *myNums = readIntoArray(argv[1]);
-/*
-    for(ulong i=0; i<arrLength; i++){
-      printf("%lu: %d\n", i, myNums[i]);
-    }
-*/
 
-    heapSort(myNums, arrLength);
+    heapSort(myNums, arrLength); /*
     printf("sorted:\n");
     for(ulong i=0; i<arrLength; i++){
       printf("%lu: %d\n", i, myNums[i]);
     }
-    /*convertNums(myNums, arrLength);
-    printf("binary:\n");
-    for(ulong i=0; i<arrLength; i++){
-      printf("%lu: %d\n", i, myNums[i]);
-    }*/
+    convertNums(myNums, arrLength); */
 
     outputToFile(myNums, argv[2]);
     free(myNums);
