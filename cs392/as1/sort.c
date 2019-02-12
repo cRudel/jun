@@ -113,14 +113,16 @@ void outputToFile(int* nums, char* file){
   for(int i=0; i<arrLength; i++){
     snprintf(str, 10, "%d", nums[i]);
   }*/
-  FILE *fp = fopen(file, "wb");
+  FILE *fp = fopen(file, "w+b");
   if(fp == NULL){
       printf("Cannot open file due to error %d\n", errno);
       exit(EXIT_FAILURE);
   }
-  char* test = "655336";
-  fwrite(test, sizeof(test), 1, fp);
-  
+  char str[20];
+  for(int i=0; i<arrLength; i++){
+	snprintf(str, 10, "%d\n", nums[i]);
+  	fwrite(&str, sizeof(str), 1, fp);
+  }
 }
 
 int main(int argc, char** argv){
@@ -141,11 +143,11 @@ int main(int argc, char** argv){
     for(ulong i=0; i<arrLength; i++){
       printf("%lu: %d\n", i, myNums[i]);
     }
-    convertNums(myNums, arrLength);
+    /*convertNums(myNums, arrLength);
     printf("binary:\n");
     for(ulong i=0; i<arrLength; i++){
       printf("%lu: %d\n", i, myNums[i]);
-    }
+    }*/
 
     outputToFile(myNums, argv[2]);
     free(myNums);
