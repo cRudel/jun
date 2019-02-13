@@ -26,7 +26,9 @@ int* readIntoArray(char* filename){
     str = malloc(sz+1);           
     arr = malloc(sz+1);
     if(str == NULL || arr == NULL){
-      printf("Malloc failed due to %d, exiting...\n", errno);    
+      printf("Malloc failed due to %d, exiting...\n", errno);
+      free(str);
+      free(arr);    
       exit(EXIT_FAILURE);
     }
     
@@ -40,7 +42,6 @@ int* readIntoArray(char* filename){
             printf("Cannot read data due to %d\n", errno);
         }
         arr[i] = atoi(str);
-      //  printf("%lu: %d\n", i, arr[i]);
         i++;
     }
     //printf("%ld\n", i);
@@ -118,9 +119,9 @@ void outputToFile(int* nums, char* file){
       printf("Cannot open file due to error %d\n", errno);
       exit(EXIT_FAILURE);
   }
+  char str[20];
   for(int i=0; i<arrLength; i++){
-	char str[sizeof(nums[i])];
-	snprintf(str, 10, "%d\n", nums[i]);
+	  snprintf(str, 10, "%d\n", nums[i]);
   	fputs(str, fp);
   }
   fclose(fp);
