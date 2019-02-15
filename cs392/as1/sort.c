@@ -101,8 +101,8 @@ void outputToFile(int* nums, char* file){
       printf("Cannot open file due to error %d\n", errno);
       exit(EXIT_FAILURE);
   }
-  /*
-  char str[20];
+  
+  /*char str[20];
   for(int i=0; i<arrLength; i++){
 	  snprintf(str, 10, "%d\n", nums[i]);
   	fputs(str, fp);

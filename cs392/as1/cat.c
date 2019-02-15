@@ -10,24 +10,25 @@
 #include <stdlib.h>
 #include <errno.h>                // this is only used for errno, I'm just going off the slides
 
-//todo: add methods
-int main(int argc, char** argv){
-      if(argc < 2){
+void argCheck(int args){
+      if(args < 2){
         printf("Please specify the filename. Usage: ./cat <filename>\n");
         exit(EXIT_FAILURE);
-    } else if(argc > 2){
+    } else if(args > 2){
         printf("Please only input one file. Usage: ./cat <filename>\n");
         exit(EXIT_FAILURE);
     }
-    
-    size_t sz;
-    char *ptr;
+    return;
+}
 
-    FILE *fp = fopen(argv[1], "rb");
+void readAndPrint(char* path){
+    FILE *fp = fopen(path, "rb");
     if(fp == NULL){
         printf("Cannot open file due to error %d\n", errno);
         exit(EXIT_FAILURE);
     }
+    size_t sz;
+    char *ptr;
     fseek(fp, 0L, SEEK_END);        // goes to the end of the file
     sz = ftell(fp);                 // sets size equal to the size of the file
     rewind(fp);                     // goes back to the beginning of the file, same thing as fseek(fp, 0L, SEEK_SET);
@@ -38,7 +39,7 @@ int main(int argc, char** argv){
       exit(EXIT_FAILURE);
     }
     for(size_t i=0; i<sz+1; i++){     // this isn't necessary but valgrind was giving me errors without it
-      ptr[i] = 0;                   // also I'm pretty sure this is good practice
+      ptr[i] = '0';                   // also I'm pretty sure this is good practice
     }
 
     // reading into the ptr below
@@ -63,6 +64,11 @@ int main(int argc, char** argv){
     }   */
     free(ptr);
     fclose(fp);
+}
+
+int main(int argc, char** argv){
+    argCheck(argc);
+    readAndPrint(argv[1]);
     return 0;       // in the slides he often puts return 1, but that typically means an unsuccessful execution
 
 }
