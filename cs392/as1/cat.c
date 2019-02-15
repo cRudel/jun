@@ -42,15 +42,25 @@ int main(int argc, char** argv){
     }
 
     // reading into the ptr below
-    while(fgets(ptr, sz, fp) != NULL){  //fread wasn't working for all filetypes, like .tar      
+
+    while(1){
+      if(ferror(fp)){
+        printf("Cannot read data due to %d\n", errno);
+      }
+      char c = fgetc(fp);
+      if(feof(fp)){
+        break;
+      }
+      printf("%c", c);
+    }
+
+    /*
+    while(fgets(ptr, sz, fp) != NULL){  fread wasn't working for all filetypes, like .tar      
         if (ferror(fp)){       
             printf("Cannot read data due to %d\n", errno);
         }
-        printf("%s", ptr);      //typically I'd put \n but cat in terminal doesn't have a newline at the end
-
-        /*  Originally I had a while(1) loop that broke when feof(fp) was true like the slides but it 
-            looped through every file I tried to read twice and I couldn't figure out why*/
-    }
+        printf("%s", ptr);      typically I'd put \n but cat in terminal doesn't have a newline at the end
+    }   */
     free(ptr);
     fclose(fp);
     return 0;       // in the slides he often puts return 1, but that typically means an unsuccessful execution

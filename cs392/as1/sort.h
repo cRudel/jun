@@ -17,7 +17,6 @@ typedef unsigned long ulong;
 
 int* readIntoArray(char*);
 void heapSort(int*, int);
-void convertNums(int*,int);
 void outputToFile(int*, char*);
 
 #endif

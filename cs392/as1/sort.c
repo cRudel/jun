@@ -89,24 +89,6 @@ void heapSort(int* arr, int n){
     }
 }
 
-int decToBin(int n){
-  int binNum = 0;
-  int remainder, i = 1, step = 1;
-    while (n!=0)
-    {
-        remainder = n%2;
-        n /= 2;
-        binNum += remainder*i;
-        i *= 10;
-    }
-    return binNum;
-}
-void convertNums(int* nums, int size){
-  for(int i=0; i<size; i++){
-      int temp = decToBin(nums[i]);
-      nums[i] = temp;
-  }
-}
 
 void outputToFile(int* nums, char* file){
   /*printf("output:\n");
@@ -119,11 +101,14 @@ void outputToFile(int* nums, char* file){
       printf("Cannot open file due to error %d\n", errno);
       exit(EXIT_FAILURE);
   }
+  /*
   char str[20];
   for(int i=0; i<arrLength; i++){
 	  snprintf(str, 10, "%d\n", nums[i]);
   	fputs(str, fp);
-  }
+  }*/
+
+  fwrite(nums, sizeof(int), arrLength, fp);
   fclose(fp);
 }
 
@@ -140,7 +125,7 @@ int main(int argc, char** argv){
     for(ulong i=0; i<arrLength; i++){
       printf("%lu: %d\n", i, myNums[i]);
     }
-    convertNums(myNums, arrLength); */
+    */
 
     outputToFile(myNums, argv[2]);
     free(myNums);
