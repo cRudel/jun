@@ -43,24 +43,17 @@ void readAndPrint(char* path){
     }
 
     // reading into the ptr below
-
-    while(1){
-      if(ferror(fp)){
-        printf("Cannot read data due to %d\n", errno);
-      }
-      char c = fgetc(fp);
-      if(feof(fp)){
-        break;
-      }
-      printf("%c", c);
+    fread(ptr,sizeof(char), sz, fp);
+    for(size_t i=0; i<sz; i++){
+      printf("%c", *(ptr+i));
     }
 
     /*
-    while(fgets(ptr, sz, fp) != NULL){  fread wasn't working for all filetypes, like .tar      
+    while(fgets(ptr, sz, fp) != NULL){        
         if (ferror(fp)){       
             printf("Cannot read data due to %d\n", errno);
         }
-        printf("%s", ptr);      typically I'd put \n but cat in terminal doesn't have a newline at the end
+        printf("%s", ptr);     
     }   */
     free(ptr);
     fclose(fp);

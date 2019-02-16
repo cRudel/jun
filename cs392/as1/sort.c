@@ -11,9 +11,9 @@
 
 ulong arrLength;
 
-int* readIntoArray(char* filename){
+uint* readIntoArray(char* filename){
     char* str;
-    int* arr;
+    uint* arr;
     size_t sz;
     FILE *fp = fopen(filename, "rb");
     if(fp == NULL){
@@ -23,6 +23,7 @@ int* readIntoArray(char* filename){
     fseek(fp, 0L, SEEK_END);
     sz = ftell(fp);  
     rewind(fp);
+   // printf("madeit1\n");
     str = malloc(sz+1);           
     arr = malloc(sz+1);
     if(str == NULL || arr == NULL){
@@ -48,14 +49,17 @@ int* readIntoArray(char* filename){
     arrLength = i;
     free(str);
     fclose(fp);
+    //printf("madeit2\n");
 
     return arr;
 }
 
-void heap(int* arr, int n, int i){
-  int largest = i;
-  int l = 2*i + 1;
-  int r = 2*i + 2;
+/*
+void heap(uint* arr, uint n, uint i){
+  uint largest = i;
+  uint l = 2*i + 1;
+  uint r = 2*i + 2;
+  printf("%u, %u, %u\n", largest, l,r);
 
   if(l<n && arr[l] > arr[largest]){
     largest = l;
@@ -66,7 +70,7 @@ void heap(int* arr, int n, int i){
   }
   if(largest != i){
     //swap
-    int temp = arr[i];
+    uint temp = arr[i];
     arr[i] = arr[largest];
     arr[largest] = temp;
     heap(arr, n, largest);
@@ -74,41 +78,54 @@ void heap(int* arr, int n, int i){
 
 }
 
-void heapSort(int* arr, int n){
-    for(int i=(int)n/2-1; i>=0; i--){
+void heapSort(uint* arr, int n){
+
+    for(uint i=(int)n/2-1; i>=0; i--){
       heap(arr, n, i);
     }
 
-    for(int i=n-1; i>=0; i--){
+    for(uint i=n-1; i>=0; i--){
       //swap 
-      int temp = arr[0];
+      uint temp = arr[0];
       arr[0] = arr[i];
       arr[i] = temp;
 
       heap(arr, i, 0);
     }
 }
+*/
 
+int compare( const void* first , const void* second )
+{
+    uint firstOne = *(uint*)first;
+    uint secondOne = *(uint*)second;
+    if( firstOne < secondOne ){
+        return -1;
+    }
+    else if( firstOne > secondOne ){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
 
-void outputToFile(int* nums, char* file){
-  /*printf("output:\n");
-  char str[20];
-  for(int i=0; i<arrLength; i++){
-    snprintf(str, 10, "%d", nums[i]);
-  }*/
+void outputToFile(uint* nums, char* file){
+
   FILE *fp = fopen(file, "wb");
   if(fp == NULL){
       printf("Cannot open file due to error %d\n", errno);
       exit(EXIT_FAILURE);
   }
-  
-  /*char str[20];
+  /*
+  Below is how to output a file in decimal:
+  char str[20];
   for(int i=0; i<arrLength; i++){
 	  snprintf(str, 10, "%d\n", nums[i]);
   	fputs(str, fp);
   }*/
 
-  fwrite(nums, sizeof(int), arrLength, fp);
+  fwrite(nums, sizeof(uint), arrLength, fp);
   fclose(fp);
 }
 
@@ -118,15 +135,12 @@ int main(int argc, char** argv){
         exit(EXIT_FAILURE);
     }
     arrLength = 0;
-    int *myNums = readIntoArray(argv[1]);
+    uint *myNums = readIntoArray(argv[1]);
+    //printf("madeit3\n");
 
-    heapSort(myNums, arrLength); /*
-    printf("sorted:\n");
-    for(ulong i=0; i<arrLength; i++){
-      printf("%lu: %d\n", i, myNums[i]);
-    }
-    */
+    //heapSort(myNums, arrLength); 
 
+    qsort(myNums, arrLength, sizeof(uint), compare);
     outputToFile(myNums, argv[2]);
     free(myNums);
     return 0;

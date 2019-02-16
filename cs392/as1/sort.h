@@ -15,8 +15,8 @@
 typedef unsigned int uint;
 typedef unsigned long ulong;
 
-int* readIntoArray(char*);
-void heapSort(int*, int);
-void outputToFile(int*, char*);
+uint* readIntoArray(char*);
+int compare( const void*, const void*);
+void outputToFile(uint*, char*);
 
 #endif
