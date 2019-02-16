@@ -5,6 +5,7 @@
 *   sort.c
 *   I pledge my honor that I have abided by the Stevens Honor System
 *
+*   To compile: gcc -O0 cat.c -o sort
 */
 
 #include "sort.h"
@@ -13,7 +14,7 @@ ulong arrLength;
 
 uint* readIntoArray(char* filename){
     char* str;
-    uint* arr;
+    uint* arr;    //because this is an unsigned int we cannot take in negative numbers, goes up to 4294967295 inclusive
     size_t sz;
     FILE *fp = fopen(filename, "rb");
     if(fp == NULL){
@@ -23,11 +24,11 @@ uint* readIntoArray(char* filename){
     fseek(fp, 0L, SEEK_END);
     sz = ftell(fp);  
     rewind(fp);
-   // printf("madeit1\n");
     str = malloc(sz+1);           
     arr = malloc(sz+1);
     if(str == NULL || arr == NULL){
       printf("Malloc failed due to %d, exiting...\n", errno);
+      //freeing to prevent memory leak
       free(str);
       free(arr);    
       exit(EXIT_FAILURE);
@@ -49,12 +50,13 @@ uint* readIntoArray(char* filename){
     arrLength = i;
     free(str);
     fclose(fp);
-    //printf("madeit2\n");
-
     return arr;
 }
 
 /*
+Below is the sorting i used originally but the max uint was too big for it
+
+
 void heap(uint* arr, uint n, uint i){
   uint largest = i;
   uint l = 2*i + 1;
@@ -113,19 +115,18 @@ int compare( const void* first , const void* second )
 void outputToFile(uint* nums, char* file){
 
   FILE *fp = fopen(file, "wb");
-  if(fp == NULL){
+  if(fp == NULL){ // I don't think this should ever happen because the file does not need to exist for it to write
       printf("Cannot open file due to error %d\n", errno);
       exit(EXIT_FAILURE);
   }
   /*
-  Below is how to output a file in decimal:
+  Below is how to output to a file in decimal:
   char str[20];
   for(int i=0; i<arrLength; i++){
 	  snprintf(str, 10, "%d\n", nums[i]);
   	fputs(str, fp);
   }*/
-
-  fwrite(nums, sizeof(uint), arrLength, fp);
+  fwrite(nums, sizeof(uint), arrLength, fp);    //This is writing to the output file in the format of binary like the assignment specified
   fclose(fp);
 }
 
@@ -135,13 +136,10 @@ int main(int argc, char** argv){
         exit(EXIT_FAILURE);
     }
     arrLength = 0;
-    uint *myNums = readIntoArray(argv[1]);
-    //printf("madeit3\n");
-
-    //heapSort(myNums, arrLength); 
-
-    qsort(myNums, arrLength, sizeof(uint), compare);
-    outputToFile(myNums, argv[2]);
-    free(myNums);
+    uint *myNums = readIntoArray(argv[1]);            //argv[1] should be the input file
+    //heapSort(myNums, arrLength); originally i used this but it wasnt working :(
+    qsort(myNums, arrLength, sizeof(uint), compare);  //this is just straight up taken from the slides
+    outputToFile(myNums, argv[2]);                    //argv[2] should be the output file
+    free(myNums);                                     //cleanup
     return 0;
 }

@@ -5,6 +5,7 @@
 *   cat.c
 *   I pledge my honor that I have abided by the Stevens Honor System
 *
+*   To compile: gcc -O0 cat.c -o cat
 */
 #include <stdio.h>
 #include <stdlib.h>
