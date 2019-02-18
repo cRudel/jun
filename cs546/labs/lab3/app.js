@@ -9,3 +9,5 @@
 const people = require("./people");
 const weather = require("./weather");
 const work = require("./work");
+
+let test = people.getPersonById("");
