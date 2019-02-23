@@ -12,14 +12,24 @@ const work = require("./work");
 
 const start = async function start(){
     try{
-        //const test = await people.firstNameMetrics();
-        //console.log(test);
+        const lex = await people.lexIndex(46);
+        console.log(lex);
 
-        let test = await work.findTheHacker("157.254.170.156");
-        console.log(test);
+    }catch(error){
+        console.error(error);
+    }
+    try{
+        const outside = await weather.shouldTheyGoOutside("Rogerio", "Outibridge");
+        console.log(outside);        
+
+    }catch(error){
+        console.error(error);
+    }
+    try{
+        const hacker = await work.findTheHacker("227.2.76.54");
+        console.log(hacker);
     }catch(error){
         console.error(error);
     }
 }
-
 start();
