@@ -47,6 +47,7 @@ const main = async () => {
   console.log("That's all, folks!");
 
   await posts.removePost(updatedPost._id);
+  console.log(`Here: ${typeof updatedPost._id}`);
 
   const db = await connection();
   await db.serverConfig.close();

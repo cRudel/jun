@@ -2,9 +2,9 @@
   "name": "lab4",
   "version": "1.0.0",
   "description": "CS-546 fourth lab",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
-    "test": "node app.js"
+    "start": "node index.js"
   },
   "author": "Christopher Rudel 10413032",
   "license": "ISC",
