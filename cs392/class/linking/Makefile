@@ -2,6 +2,7 @@
 
 CC=gcc
 OBJS = main.o libcs392_sum.so
+RM = rm -f
 
 prog : $(OBJS)
 	$(CC) -o prog main.o libcs392_sum.so
@@ -16,10 +17,21 @@ cs392_sum.o : cs392_sum.c
 	$(CC) -o cs392_sum.o -c cs392_sum.c
 
 clean: 
-	rm *.so *.o
+	-$(RM) *~
+	-$(RM) *#*
+	-$(RM) *swp
+	-$(RM) *.core
+	-$(RM) *.stackdump
+	-$(RM) *.o
+	-$(RM) *.so
+	-$(RM) *.obj
+	-$(RM) *~
+	-$(RM) *#*
+	-$(RM) *swp
+	-$(RM) *.core
+	-$(RM) *.stackdump
+	-$(RM) prog
+	
 
-fclean: clean
-	rm prog
-
-re: fclean prog
+re: clean prog
 

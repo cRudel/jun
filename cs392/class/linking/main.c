@@ -9,7 +9,6 @@ int main(int argc, char** argv){
 	int c = cs392_sum(a, b);
 
 	printf("The summation of a and b is %d\n", c);
-
 	return 0; 
 }
 
