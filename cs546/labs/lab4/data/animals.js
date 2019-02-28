@@ -2,6 +2,7 @@
 *   Christopher Rudel
 *   CS546
 *   animals.js
+*   lab4
 *   I pledge my honor that I have abided by the Stevens Honor System
 */
 
@@ -34,9 +35,14 @@ const getAll = async function getAll(){
 }
 
 const get = async function get(id){
+    if(typeof id == "string"){
+        ObjectId = require('mongodb').ObjectID;
+        id = ObjectId(id);
+    }
+    
     let animalCollection = await animals();
     let findAnimal = await animalCollection.findOne({ _id: id });
-    if(findAnimal === null) throw `No animal with id: ${id}`;
+    //if(findAnimal === null) throw `No animal with id: ${id}`;
     return findAnimal;
 }
 
@@ -56,9 +62,20 @@ const remove = async function remove(id){
 
 const rename = async function rename(id, newName){
     let animalCollection = await animals();
+    let oldAnimal = await this.get(id);
     let newAnimal = {
+        $set:{
+            name: newName,
+            animalType: oldAnimal.animalType
+        }
+    };
 
+    const updatedInfo = await animalCollection.updateOne({_id: oldAnimal._id}, newAnimal);
+    if(updatedInfo.modifiedCount === 0){
+        throw `Could not update dog: ${id} successfully`;
     }
+
+    return await this.get(id);
 }
 
 
