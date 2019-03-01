@@ -7,7 +7,8 @@ let _db = undefined;
 
 module.exports = async () => {
   if (!_connection) {
-    _connection = await MongoClient.connect(mongoConfig.serverUrl);
+    _connection = await MongoClient.connect(mongoConfig.serverUrl, { useNewUrlParser: true });
+    // the { useNewUrlParser: true } is to avoid deprecation warning
     _db = await _connection.db(mongoConfig.database);
   }
 
