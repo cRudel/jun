@@ -10,6 +10,9 @@ const mongoCollections = require("./collections");
 const animals = mongoCollections.animals;
 
 const create = async function create(name, animalType){
+    if(name === null || name === undefined || animalType === null || animalType === undefined){
+        throw new Error("Ensure arguments exist; cannot be null or undefined");
+    }
     if(typeof name != "string") throw new Error("Name needs to be of type string");
     if(typeof animalType != "string") throw new Error("animalType needs to be of type string");
     let animalCollection = await animals();
@@ -37,12 +40,17 @@ const getAll = async function getAll(){
 }
 
 const get = async function get(id){
+    if(id === null || id === undefined){
+        throw new Error("Ensure id argument exists; cannot be null or undefined");
+    }
     if(!(typeof id == "string" || typeof id == "object")){
         throw new Error("Id needs to be a string or ObjectId");
     }
     if(typeof id == "string"){
-        ObjectId = require('mongodb').ObjectID;
-        id = ObjectId(id);
+        try{
+            ObjectId = require('mongodb').ObjectID;
+            id = ObjectId(id);
+        }catch(e){throw new Error(`Provided id: ${id} is not a valid mongo id`);}
     }
     
     let animalCollection = await animals();
@@ -52,8 +60,17 @@ const get = async function get(id){
 }
 
 const remove = async function remove(id){
+    if(id === null || id === undefined){
+        throw new Error("Ensure id argument exists; cannot be null or undefined");
+    }
     if(!(typeof id == "string" || typeof id == "object")){
         throw new Error("Id needs to be a string or ObjectId");
+    }
+    if(typeof id == "string"){
+        try{
+            ObjectId = require('mongodb').ObjectID;
+            id = ObjectId(id);
+        }catch(e){throw new Error(`Provided id: ${id} is not a valid mongo id`);}
     }
     let animalCollection = await animals();
     let animalToRemove = await this.get(id);
@@ -69,12 +86,16 @@ const remove = async function remove(id){
 }
 
 const rename = async function rename(id, newName){
+    if(id === null || id === undefined || newName === null || newName === undefined){
+        throw new Error("Ensure arguments exist; cannot be null or undefined");
+    }
     if(!(typeof id == "string" || typeof id == "object")){
         throw new Error("Id needs to be a string or ObjectId");
     }
-    if(typeof newName != "string") throw new Error("The new name needs to be a string");
+    if(typeof newName != "string") throw new Error("The new name argument needs to be a string");
     let animalCollection = await animals();
     let oldAnimal = await this.get(id);
+    if(oldAnimal.name == newName){return oldAnimal;} // if the names are equal an error occurs
     let newAnimal = {
         $set:{
             name: newName,
@@ -84,7 +105,7 @@ const rename = async function rename(id, newName){
 
     const updatedInfo = await animalCollection.updateOne({_id: oldAnimal._id}, newAnimal);
     if(updatedInfo.modifiedCount === 0){
-        throw new Error(`Could not update dog: ${id} successfully`);
+        throw new Error(`Could not update animal: ${id} successfully`);
     }
 
     return await this.get(id);

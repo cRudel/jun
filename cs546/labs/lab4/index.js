@@ -11,7 +11,7 @@ const animals = require("./data/animals");
 const start = async function start(){
 
     let sasha = await animals.create("Sasha", "Dog");
-    console.log(sasha);
+    console.log(sasha);         // [Sasha]
     let lucy = await animals.create("Lucy", "Dog");
     let allAnimals = await animals.getAll();
     console.log(allAnimals);    // [Sasha, Lucy]
@@ -26,7 +26,7 @@ const start = async function start(){
     //Closing connection to db
     const db = await connection();
     await db.serverConfig.close();
-    console.log("\nDone");
+    //console.log("\nDone");
 }
 
 start();
