@@ -1,13 +1,10 @@
 //
 //  AppDelegate.swift
-//  JSON
+//  JSON_and_Maps
 //
-//  Created by Chris Rudel on 3/4/19.
+//  Created by Chris Rudel on 3/3/19.
 //  Copyright © 2019 Chris Rudel. All rights reserved.
 //
-//  First exercise for CS523 Assignment 4
-//  I pledge my honor that I have abided by the Stevens Honor System
-//  The second exercise can be found in the Maps folder
 
 import UIKit
 import CoreData
@@ -56,7 +53,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
          application to it. This property is optional since there are legitimate
          error conditions that could cause the creation of the store to fail.
         */
-        let container = NSPersistentContainer(name: "JSON")
+        let container = NSPersistentContainer(name: "JSON_and_Maps")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
                 // Replace this implementation with code to handle the error appropriately.

@@ -5,6 +5,9 @@
 //  Created by Chris Rudel on 3/3/19.
 //  Copyright © 2019 Chris Rudel. All rights reserved.
 //
+// Second exercise for CS523 Assignment 4
+// I pledge my honor that I have abided by the Stevens Honor System
+// The first exercise can be found in the JSON folder
 
 /* --- Coordinate info ----
  Stevens: 40.7442912, -74.0260221
@@ -16,6 +19,7 @@ import MapKit
 
 class ViewController: UIViewController, MKMapViewDelegate {
     
+    //below is the coordinate that the map is located around
     var coordinate2D = CLLocationCoordinate2DMake(40.7416064,-74.0303157)
     var isOn = false
     
@@ -125,7 +129,7 @@ class ViewController: UIViewController, MKMapViewDelegate {
         annotationView.detailCalloutAccessoryView = paragraph
         var photo = annotation.photo
         let size = CGSize(width: 50, height: 50)
-        photo = imageWithImage(image: photo!, scaledToSize: size)
+        photo = resizeImage(image: photo!, scaledToSize: size)
         annotationView.leftCalloutAccessoryView = UIImageView(image: photo)
         
         return annotationView
@@ -133,8 +137,9 @@ class ViewController: UIViewController, MKMapViewDelegate {
     
     //this function was taken from https://stackoverflow.com/questions/2658738/the-simplest-way-to-resize-an-uiimage
     //this function was essential to ensure the photos associated with each pin were not too big
-    //we have not gone over CGSize in class and
-    func imageWithImage(image:UIImage, scaledToSize newSize:CGSize) -> UIImage{
+    //we have not gone over CGSize in class and without it the photos were obstructing
+    //the information of the pins
+    func resizeImage(image:UIImage, scaledToSize newSize:CGSize) -> UIImage{
         UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0);
         image.draw(in: CGRect(origin: CGPoint.zero, size: CGSize(width: newSize.width, height: newSize.height)))
         let newImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!

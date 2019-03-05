@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:JSON.xcodeproj">
+      location = "self:/Users/chris/Coding/jun/cs523/assignment4/JSON/JSONWithout.xcodeproj">
    </FileRef>
 </Workspace>
