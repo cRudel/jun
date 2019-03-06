@@ -18,7 +18,7 @@ char *cs392_strncat(char *dest, char *src, unsigned n){
     while(dest[destSize] != '\0'){
         destSize++;
     }
-    for(; i<n; destSize++,i++){
+    for(; i<n && src[i] != '\0'; destSize++,i++){
         dest[destSize] = src[i];
     }
     dest[destSize] = '\0';
