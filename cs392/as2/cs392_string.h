@@ -7,8 +7,8 @@
 *
 */
 
-#ifndef CS392_STRING_H
-#define CS392_STRING_H
+#ifndef CS392_STRING_H  //if the header file is not defined,
+#define CS392_STRING_H  //declare the header file
 
 void *cs392_memcpy (void *, void *, unsigned);
 unsigned cs392_strlen(char *);

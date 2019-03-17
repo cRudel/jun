@@ -12,7 +12,8 @@
 unsigned cs392_strlen(char *str){
     unsigned len = 0;
     for(int i=0; str[i] != '\0'; i++){
-        ++len;
+        ++len;  //the end of strings are terminated by \0
     }
+    //probably could have just returned i but whatever
     return len;
 }
