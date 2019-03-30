@@ -12,7 +12,7 @@ const getPersonById = async function getPersonById(id){
         throw "Error: please ensure the argument is a number for function getPersonById";
     }
     
-    let names = "";
+    let matching = [];
 
     let people = await getPeople();
 
@@ -21,17 +21,66 @@ const getPersonById = async function getPersonById(id){
     }
     people.forEach(person => {
         if(person["id"] == id){
-            names = names.concat(person["firstName"], " ", person["lastName"]);
+            matching.push(person);
         }
     });
-    return names;
+    return matching;
 
+}
+
+const getPersonByFirstName = async function getPersonByFirstName(name){
+    if(typeof name !== "string"){
+        throw new Error("Name provided must be of type string");
+    }
+    let people = await getPeople();
+    let matching = [];
+    people.forEach(person =>{
+        if(person["firstName"] == name){
+            matching.push(person);
+        }
+    });
+    return matching;
+}
+
+const getPersonByLastName = async function getPersonByLastName(name){
+    if(typeof name !== "string"){
+        throw new Error("Name provided must be of type string");
+    }
+    let people = await getPeople();
+    let matching = [];
+
+    people.forEach(person =>{
+        if(person["lastName"] == name){
+            matching.push(person);
+        }
+    });
+    return matching;
+}
+
+const getPersonByFullName = async function getPersonByFullName(fName,lName){
+    if(typeof fName !== "string"){
+        throw new Error("Name provided must be of type string");
+    }
+    if(typeof lName !== "string"){
+        throw new Error("Name provided must be of type string");
+    }
+    let people = await getPeople();
+    let matching = [];
+
+    people.forEach(person =>{
+        if(person["firstName"] == fName && person["lastName"] == lName){
+            matching.push(person);
+        }
+    });
+    return matching;
 }
 
 
 
 
-
 module.exports = {
-    getPersonById
+    getPersonById,
+    getPersonByFirstName,
+    getPersonByLastName,
+    getPersonByFullName
 };

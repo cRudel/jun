@@ -1,5 +1,6 @@
 const searchRoutes = require("./search");
 const detailRoutes = require("./details");
+//const mainRoutes = require("./main");
 const path = require("path");
 
 const constructorMethod = app => {
