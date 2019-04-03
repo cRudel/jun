@@ -22,7 +22,7 @@ router.post("/", async (req, res) =>{
             
             people = await mainData.getPersonByFirstName(searchBody.firstName);
         }
-        res.render('layouts/main', {personName: searchBody.firstName + searchBody.lastName, people: people, titlePage: "People Found"});
+        res.render('layouts/main', {personName: searchBody.firstName + " " + searchBody.lastName, people: people, titlePage: "People Found"});
     }catch(e){
         res.status = 500;
         res.render('layouts/main', {title: e});
