@@ -1,0 +1,43 @@
+pwd
+ls -l -a
+mkdir temp
+ps -h
+rm -rf temp
+man ls
+exit
+touch test.txt
+exit
+touch testt.txt
+rm testt.txt
+exit
+rm test.txt
+touch hi.c
+rm hi.c
+pwd
+exit
+rm test.c
+exit
+touch test.c
+rm test.c
+exit
+touch hi.txt
+exit
+rm hi.txt
+rm hi.txt
+rm hi.txt
+rm hi.txt
+touch hi.txt
+rm hi.txt
+pwd
+exit
+rm test.txt
+exit
+touch test.txt
+exit
+ls
+exit
+hi
+ls
+make clean
+ls
+exit 
