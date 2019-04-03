@@ -17,22 +17,21 @@
 
 int main(){
 
-    char cwd[BUFF];
     char buffer[BUFF];
     int readIn;
     int i;
     
     while(1){
         handleSignal();
-        printf("cs392_shell $: ");
-        /*
-        if(getcwd(cwd, sizeof(cwd)) == NULL){
-            perror("getting working directory error");
-            exit(1);
+        if(receivedSignal()){
+            sleep(1);
+            printf("made it\n");
+            continue;
         }
-        printf("%s: ", cwd);*/
+        printf("cs392_shell $: ");
         fflush(stdout);
         
+        // below read(0, ...) is equivalent to read(stdin,...)
         if( (readIn = read(0, buffer, BUFF-1)) < 0){
             perror("Error reading in.\n");
             exit(1);
@@ -40,7 +39,6 @@ int main(){
         //printf("%d\n", readIn);
         buffer[readIn-1] = '\0';
         //printf("Received command: %s\n", buffer);
-
         writeToLog(buffer);
         executeCommands(buffer);
     }

@@ -16,5 +16,6 @@
 #include <string.h>
 void hdl(int,siginfo_t*,void*);
 void handleSignal();
+int receivedSignal();
 
 #endif

@@ -25,6 +25,9 @@ cs392_signal.o: cs392_signal.c
 
 
 clean:
-	$(RM) *.o cs392_shell
+	$(RM) *.o 
+	$(RM) cs392_shell
+	#$(RM) cs392_shell.log	
+
 
 re:	clean cs392_shell
