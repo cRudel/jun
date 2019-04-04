@@ -21,8 +21,8 @@ char** separateWords(char* str){
         }
     }
     char** arr = malloc(256 * sizeof(char*));
-    for(int i=0; i<numWords+1; i++){
-        arr[i] = malloc(sizeof(char) * numWords+1);
+    for(int i=0; i<numWords; i++){
+        arr[i] = malloc(sizeof(char) * numWords);
     }
     char* word = strtok(str, " ");
     int place = 0;
@@ -43,7 +43,7 @@ void executeCommands(char* str){
 
     if( strcmp(words[0], "exit") == 0){
         printf("Exiting shell.\n");
-        for(int i=0; i<numWords+1; i++){
+        for(int i=0; i<numWords; i++){
             free(words[i]);
         }
         free(words);
@@ -51,7 +51,7 @@ void executeCommands(char* str){
     }else{
         if ((pid = fork()) < 0){
             printf("Error forking, exiting...\n");
-            for(int i=0; i<numWords+1; i++){
+            for(int i=0; i<numWords; i++){
                 free(words[i]);
             }
             free(words);
@@ -64,7 +64,7 @@ void executeCommands(char* str){
             int work;
             if((work = execvp(words[0], words)) < 0){
                 printf("%s: command not found.\n", words[0]);
-                for(int i=0; i<numWords+1; i++){
+                for(int i=0; i<numWords; i++){
                     free(words[i]);
                 }
                 free(words);
@@ -72,7 +72,7 @@ void executeCommands(char* str){
             }
         }
     }
-    for(int i=0; i<numWords+1; i++){
+    for(int i=0; i<numWords; i++){
         free(words[i]);
     }
     free(words);

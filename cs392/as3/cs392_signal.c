@@ -9,20 +9,16 @@
 
 #include "cs392_signal.h"
 
-
-int var = 0;
-int receivedSignal(){
-    return var;
-}
-
 void hdl(int sig, siginfo_t *siginfo, void* context){
-    printf ("\nReceived a signal, to exit type 'exit'\n");
-    var = 1;
-    receivedSignal();
+    if(sig == SIGINT){
+        printf ("\nReceived a signal, to exit type 'exit'\n");
+    }
+    if(sig == SIGTSTP){
+        printf ("\nReceived a signal, to exit type 'exit'\n");
+    }
 }
 
 void handleSignal(){
-    
     struct sigaction act;
     memset(&act, '\0', sizeof(act));
 
@@ -32,10 +28,7 @@ void handleSignal(){
     if(sigaction(SIGINT, &act, NULL) < 0){
         perror("sigaction");
         }
-
-    /*
     if(sigaction(SIGTSTP, &act, NULL) < 0){
         perror("sigaction");
         }
-    */
 }

@@ -23,18 +23,17 @@ int main(){
     
     while(1){
         handleSignal();
-        if(receivedSignal()){
-            sleep(1);
-            printf("made it\n");
-            continue;
-        }
         printf("cs392_shell $: ");
-        fflush(stdout);
+        fflush(stdout); //The above print statement doesn't have a newline character so you need to flush it out
         
         // below read(0, ...) is equivalent to read(stdin,...)
         if( (readIn = read(0, buffer, BUFF-1)) < 0){
-            perror("Error reading in.\n");
-            exit(1);
+            if(errno == EINTR){     //received signal, ignore current read and continue
+                continue;
+            }else{
+                perror("Error reading in.\n");
+                exit(1);
+            }
         }
         //printf("%d\n", readIn);
         buffer[readIn-1] = '\0';

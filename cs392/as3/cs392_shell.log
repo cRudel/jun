@@ -1,15 +1,7 @@
-ls
-ls
-make clean
-rm t
-rm test.c
-ls
-exit
 pwd
-ls
-make re
-ls
-make clean
-ls
+ls -l -a
+mkdir temp
+rm -rf temp/
+ps -h
+man ls
 exit
-clear

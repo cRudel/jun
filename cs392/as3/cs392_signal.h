@@ -14,8 +14,8 @@
 #include <unistd.h>
 #include <signal.h>
 #include <string.h>
+#include <errno.h>
 void hdl(int,siginfo_t*,void*);
 void handleSignal();
-int receivedSignal();
 
 #endif
