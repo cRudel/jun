@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "stdio.h": "c",
-        "cs392_midterm.h": "c"
+        "cs392_midterm.h": "c",
+        "cs392_signal.h": "c"
     }
 }
