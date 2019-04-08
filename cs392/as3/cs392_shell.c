@@ -13,7 +13,7 @@
 #include "cs392_signal.h"
 
 #define BUFF 256
-
+// I'm not sure if 256 is right but it seemed to be okay in my testing
 
 int main(){
 
@@ -29,7 +29,7 @@ int main(){
         // below read(0, ...) is equivalent to read(stdin,...)
         if( (readIn = read(0, buffer, BUFF-1)) < 0){
             if(errno == EINTR){     //received signal, ignore current read and continue
-                continue;
+                continue;           //no printf statement needed because its handled in the signal file
             }else{
                 perror("Error reading in.\n");
                 exit(1);
@@ -38,8 +38,8 @@ int main(){
         //printf("%d\n", readIn);
         buffer[readIn-1] = '\0';
         //printf("Received command: %s\n", buffer);
-        writeToLog(buffer);
-        executeCommands(buffer);
+        writeToLog(buffer);     // I have it write to the log first in case its a command like 
+        executeCommands(buffer);// exit which will quit the shell, if it were second it wouldnt log
     }
     return 0;
 }

@@ -10,7 +10,8 @@
 #include "cs392_log.h"
 void writeToLog(char* str){
     FILE *fp;
-    fp = fopen("cs392_shell.log", "a");
+    fp = fopen("cs392_shell.log", "a");     // the a specification always writes to file, it creates one
+                                            // if a file with the name is not available
     if(fp == NULL){
         perror("Error opening file.\n");
     }else{

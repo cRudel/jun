@@ -75,6 +75,6 @@ void executeCommands(char* str){
     for(int i=0; i<numWords; i++){
         free(words[i]);
     }
-    free(words);
+    free(words);        //valgrind says i have no memory leaks but some errors with strcmp and strcpy
 }
 

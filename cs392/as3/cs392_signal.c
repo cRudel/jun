@@ -7,14 +7,16 @@
 *
 */
 
+//  This code was provided in the professors slides and in class
+
 #include "cs392_signal.h"
 
 void hdl(int sig, siginfo_t *siginfo, void* context){
     if(sig == SIGINT){
-        printf ("\nReceived a signal, to exit type 'exit'\n");
+        printf ("\nReceived signal SIGINT (CTRL + C), to exit type 'exit'\n");
     }
     if(sig == SIGTSTP){
-        printf ("\nReceived a signal, to exit type 'exit'\n");
+        printf ("\nReceived signal SIGTSTP (CTRL + Z), to exit type 'exit'\n");
     }
 }
 
