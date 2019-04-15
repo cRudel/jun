@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const data = require('../data/index');
+const data = require('../data');
 const prime = data.prime;
 
 router.get('/', (req,res) =>{

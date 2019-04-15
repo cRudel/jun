@@ -1,5 +1,10 @@
 *, html{
     font-family: 'Times New Roman', Times, sans-serif;
+    font-size: 15px;
+}
+
+label{
+    font-size: 30px;
 }
 
 .container{
@@ -31,12 +36,12 @@ textarea{
 
 #error-container {
     margin-top: 15px;
-    background-color: #d87093
+    background-color: lightcoral;
 }
 
 button{
     padding: 20px;
-    background-color: #87fa96;
+    background-color: lightgreen;
 }
 
 
@@ -44,9 +49,3 @@ button{
     list-style-type: none;
 }
 
-#student-info ol{
-    display: inline;
-    padding: 10px;
-    position: relative;
-    top: 150px;
-}

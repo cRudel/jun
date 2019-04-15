@@ -28,45 +28,39 @@
     var staticForm = document.getElementById("static-form");
     if(staticForm){
         AttemptsList = document.getElementById("attempts");
+    
+
+        staticForm.addEventListener("submit", function(event) {
+            event.preventDefault();
+            var isPrime = primeMethods['isPrime'];
+
+            var errorTextElem = document.getElementById("error-container");
+            try{
+                var textArea = document.getElementById("prime").value;
+                if(textArea === ""){
+                    throw new Error("Please provide a value");
+                }
+                else{
+                    errorTextElem.classList.add('hidden');
+                }
+                var li = document.createElement("li");
+                //console.log(textArea);
+                var result = isPrime(parseInt(textArea));
+                var textnode;
+                if(result){
+                    li.classList.add('is-prime');
+                    textnode = document.createTextNode(textArea + " is a prime number");
+                }else{
+                    li.classList.add('not-prime');
+                    textnode = document.createTextNode(textArea + " is NOT a prime number");
+                }
+
+                li.appendChild(textnode);
+                AttemptsList.appendChild(li);
+            } catch(e){
+                errorTextElem.classList.remove('hidden');
+                errorTextElem.textContent = e;
+            }
+        });
     }
-
-    staticForm.addEventListener("submit", function(event) {
-        event.preventDefault();
-        var isPrime = primeMethods['isPrime'];
-
-        var errorTextElem = document.getElementById("error-container");
-        try{
-            var textArea = document.getElementById("prime").value;
-
-            if(textArea === ""){
-                throw new Error("Please provide a value");
-            }
-            else{
-                errorTextElem.classList.add('hidden');
-            }
-
-            var li = document.createElement("li");
-            //console.log(textArea);
-            
-            var result = isPrime(parseInt(textArea, 10));
-            
-
-            var textnode;
-            if(result){
-                li.classList.add('is-prime');
-                textnode = document.createTextNode(textArea + " is a prime number");
-            }else{
-                li.classList.add('not-prime');
-                textnode = document.createTextNode(textArea + " is NOT a prime number");
-            }
-
-            
-
-            li.appendChild(textnode);
-            AttemptsList.appendChild(li);
-        } catch(e){
-            errorTextElem.classList.remove('hidden');
-            errorTextElem.textContent = e;
-        }
-    });
 })();
