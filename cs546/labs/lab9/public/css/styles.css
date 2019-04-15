@@ -8,7 +8,7 @@
 }
 
 textarea{
-    background-color: #ffffe0;
+    background-color: lightyellow;
 }
 
 #list-prime{
@@ -17,10 +17,12 @@ textarea{
 
 .is-prime {
     color: #00E676;
+    text-align: left;
 }
 
 .not-prime {
     color: #FF3D00;
+    text-align: left;
 }
 
 .hidden{
@@ -28,6 +30,7 @@ textarea{
 }
 
 #error-container {
+    margin-top: 15px;
     background-color: #d87093
 }
 

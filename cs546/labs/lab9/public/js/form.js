@@ -39,7 +39,6 @@
             var textArea = document.getElementById("prime").value;
 
             if(textArea === ""){
-                errorTextElem.classList.remove('hidden');
                 throw new Error("Please provide a value");
             }
             else{
@@ -48,7 +47,9 @@
 
             var li = document.createElement("li");
             //console.log(textArea);
+            
             var result = isPrime(parseInt(textArea, 10));
+            
 
             var textnode;
             if(result){
@@ -64,6 +65,7 @@
             li.appendChild(textnode);
             AttemptsList.appendChild(li);
         } catch(e){
+            errorTextElem.classList.remove('hidden');
             errorTextElem.textContent = e;
         }
     });
