@@ -8,7 +8,7 @@
             if(isNaN(num)){
                 throw new Error('Not a number');
             }
-            if(num == 1){
+            if(num <= 1){
                 return false;
             }
             if(num == 2){

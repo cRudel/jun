@@ -1,3 +1,11 @@
+/*
+*   Christopher Rudel
+*   CS546
+*   app.js
+*   lab9
+*   I pledge my honor that I have abided by the Stevens Honor System
+*/
+
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
