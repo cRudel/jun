@@ -68,7 +68,7 @@ void *cs392_thread_run(void* arg){
     }
     fclose(fp);
 
-    return "hi";
+    return NULL;
 
 }
 
