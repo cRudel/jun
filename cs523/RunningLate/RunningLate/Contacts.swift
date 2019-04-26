@@ -9,6 +9,7 @@
 struct Person{
     var name: String
     var phoneNumber: String
+    var selected: Bool
 }
 
 import Foundation
@@ -45,7 +46,7 @@ class Contacts: UITableViewController{
                         //print(type(of: contact.familyName))
                         
                         let phone:String = contact.phoneNumbers.first?.value.stringValue ?? ""
-                        let dude = Person(name: name, phoneNumber: phone)
+                        let dude = Person(name: name, phoneNumber: phone, selected: false)
                         self.AvailContacts.append(dude)
                         
                     })
@@ -65,14 +66,19 @@ class Contacts: UITableViewController{
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
         getContacts()
-        print(AvailContacts)
+        //print(AvailContacts)
+        super.viewDidAppear(true)
+        self.tableView.reloadData()
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return AvailContacts.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "customcell", for: indexPath)
-        cell.textLabel?.text = "test"
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        cell.textLabel?.text = AvailContacts[indexPath.row].name
         return cell
     }
 
