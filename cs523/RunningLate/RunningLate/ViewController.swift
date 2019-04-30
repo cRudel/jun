@@ -16,6 +16,8 @@ import CoreLocation
 class ViewController: UIViewController, CLLocationManagerDelegate {
     
     
+    var AvailContacts: [Person] = []
+
     @IBOutlet weak var map: MKMapView!
     let manager = CLLocationManager()
     
