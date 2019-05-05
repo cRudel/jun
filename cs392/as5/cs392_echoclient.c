@@ -1,14 +1,13 @@
+/*
+*   Christopher Rudel
+*   Professor Xu
+*   CS 392
+*   cs392_echoclient.c
+*   I pledge my honor that I have abided by the Stevens Honor System Christopher Rudel
+*
+*/
 
-#include <stdio.h>
-#include <netdb.h> 
-#include <netinet/in.h> 
-#include <stdlib.h> 
-#include <string.h> 
-#include <sys/socket.h> 
-#include <sys/types.h> 
-#include <arpa/inet.h>
-#include <unistd.h>
-
+#include "cs392_log.h"
 
 int main(int argc, char** argv){
 	if(argc != 3){

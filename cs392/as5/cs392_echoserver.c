@@ -1,16 +1,13 @@
+/*
+*   Christopher Rudel
+*   Professor Xu
+*   CS 392
+*   cs392_echoserver.c
+*   I pledge my honor that I have abided by the Stevens Honor System Christopher RUdel
+*
+*/
 
-#include <stdio.h>
-#include <netdb.h> 
-#include <netinet/in.h> 
-#include <stdlib.h> 
-#include <string.h> 
-#include <sys/socket.h> 
-#include <sys/types.h> 
-#include <arpa/inet.h>
-#include <unistd.h>
-
-
-
+#include "cs392_log.h"
 
 int main(int argc, char** argv){
 	if(argc != 2){
@@ -43,14 +40,16 @@ int main(int argc, char** argv){
 		exit(EXIT_FAILURE);
 	}
 
-	if((clientsock = accept(serversock, (struct sockaddr *) &echoclient, &clientlen)) < 0){
+	if((clientsock = accept(serversock, (struct sockaddr *) &echoclient, (socklen_t *)&clientlen)) < 0){
 		perror("Error accepting. Exiting...\n");
 		exit(EXIT_FAILURE);
 	}
 
+	cs392_socket_log(inet_ntoa(echoclient.sin_addr), ntohs(echoclient.sin_port));
 	recv(clientsock, buffer, 1024, 0);
-	printf("%s\n", buffer);
+
 	send(clientsock, buffer, strlen(buffer), 0);
-	printf("Message sent back\n");
+
+	fflush(stdout);
 	return 0;
 }
