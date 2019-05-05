@@ -34,22 +34,25 @@ int main(int argc, char** argv){
 		perror("Bind failure. Exiting...\n");
 		exit(EXIT_FAILURE);
 	}
-
-	if(listen(serversock, 5) < 0){	/* In the lecutre code he set MAXPENDING to 5, its the same thing */
-		perror("Error listening. Exiting...\n");
-		exit(EXIT_FAILURE);
+	while(1){
+		printf("listen\n");
+		if(listen(serversock, 5) < 0){	/* In the lecutre code he set MAXPENDING to 5, its the same thing */
+			perror("Error listening. Exiting...\n");
+			exit(EXIT_FAILURE);
+		}
+		printf("accept\n");
+		if((clientsock = accept(serversock, (struct sockaddr *) &echoclient, (socklen_t *)&clientlen)) < 0){
+			perror("Error accepting. Exiting...\n");
+			exit(EXIT_FAILURE);
+		}
+		fflush(stdout);
+		printf("log\n");
+		cs392_socket_log(inet_ntoa(echoclient.sin_addr), ntohs(echoclient.sin_port));  
+		recv(clientsock, buffer, 1024, 0);
+		printf("send\n");
+		send(clientsock, buffer, strlen(buffer), 0);
+		shutdown(clientsock, 2);
 	}
-
-	if((clientsock = accept(serversock, (struct sockaddr *) &echoclient, (socklen_t *)&clientlen)) < 0){
-		perror("Error accepting. Exiting...\n");
-		exit(EXIT_FAILURE);
-	}
-
-	cs392_socket_log(inet_ntoa(echoclient.sin_addr), ntohs(echoclient.sin_port));
-	recv(clientsock, buffer, 1024, 0);
-
-	send(clientsock, buffer, strlen(buffer), 0);
-
-	fflush(stdout);
+	
 	return 0;
 }
