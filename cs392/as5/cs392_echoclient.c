@@ -32,8 +32,10 @@ int main(int argc, char** argv){
 		perror("Connection failed. Exiting...\n");
 		exit(EXIT_FAILURE);
 	}
-	printf("Connection established. Please enter your message to the server\n");
-	scanf("%s", buffer);
+	printf("Connection established. Please enter your message to the server:\n");
+	fgets(buffer, sizeof(buffer), stdin);
+	buffer[strlen(buffer)-1] = '\0'; //This would be a newline which makes things a little funky
+	printf("sending message: %s\n", buffer);
 
 	send(sock, buffer, strlen(buffer), 0);
 	recv(sock, buffer, 1024-1, 0);

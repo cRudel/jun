@@ -10,12 +10,13 @@
 #include "cs392_log.h"
 
 void cs392_socket_log(char* ipAdd, int portNum){
-    FILE *fp;
-    if( (fp = fopen("cs392_shell.log","a")) == NULL){
+    FILE *fp = fopen("cs392_shell.log","a");
+    if(fp == NULL){
         perror("Error Opening cs392_echo.log\n");
-        exit(EXIT_FAILURE);
+        exit(1);
     }else{
         fprintf(fp,"IP address: %s, port number: %d\n", ipAdd, portNum);
+        printf("Shoulda printed\n");
     }
     fclose(fp);
     return;

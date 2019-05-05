@@ -19,6 +19,7 @@
 #include <sys/types.h> 
 #include <arpa/inet.h>
 #include <unistd.h>
+#include <strings.h>
 
 void cs392_socket_log(char*,int);
 
