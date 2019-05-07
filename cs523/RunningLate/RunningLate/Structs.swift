@@ -18,5 +18,4 @@ struct Person{
 struct Weekday{
     var day: String
     var enabled: Bool
-    
 }

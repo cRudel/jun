@@ -11,9 +11,11 @@ import UIKit
 import MessageUI
 
 
-class Messages: UIViewController{
+class Messages: UIViewController, UINavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate{
     
     var AvailContacts: [Person] = []
+    var ListContacts: [Person] = []
+    var msg = ""
     
     @IBOutlet weak var lblText: UILabel!
     @IBOutlet weak var txtField: UITextField!
@@ -30,30 +32,43 @@ class Messages: UIViewController{
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        navigationController?.delegate = self
+        tableView.delegate = self
+        tableView.dataSource = self
         super.viewDidAppear(true)
-        self.tableView.reloadData()
-        print(AvailContacts)
-    }
-    
-}
-extension Messages: UITableViewDataSource, UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        var count = 0
+        if(msg == ""){}else{
+            lblText.text = msg
+        }
         for contact in AvailContacts{
-            if(contact.selected){
-                count += 1
+            if contact.selected{
+                ListContacts.append(contact)
             }
         }
-        return count
+        //print(AvailContacts.count)
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+    }
+    
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return ListContacts.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as UITableViewCell
-        if(AvailContacts[indexPath.row].selected){
-            cell.textLabel!.text = AvailContacts[indexPath.row].name
-        }
+        cell.textLabel!.text = ListContacts[indexPath.row].name
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {}
+    
+    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+        (viewController as? Main)?.MessageToSend = lblText.text ?? ""
+    }
+    
     
 }
