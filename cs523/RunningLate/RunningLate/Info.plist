@@ -32,6 +32,8 @@
 	<string>The Running Late app wants to access your location in the background.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>The Running Late app wants to access your location.</string>
+	<key>UIApplicationExitsOnSuspend</key>
+	<false/>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

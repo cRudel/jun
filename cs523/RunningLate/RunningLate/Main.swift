@@ -5,7 +5,10 @@
 //  Created by Chris Rudel on 2/25/19.
 //  Copyright © 2019 Chris Rudel. All rights reserved.
 //
-//  Still need to design the core functionality of the app
+//  CS 523
+//  Professor Damopolous
+//  Running Late - Main.swift
+//  I pledge my honor that I have abided by the Stevens Honor System - Christopher Rudel
 
 
 import UIKit
@@ -18,8 +21,18 @@ class Main: UIViewController, CLLocationManagerDelegate, MFMessageComposeViewCon
     var HomeLocation: MKPointAnnotation?
     var AvailContacts: [Person]?
     var MessageToSend: String = "Hello, I am running late today I apologize for the inconvience!"
-    var AlarmDays = [Weekday(day: "Sunday", enabled: false), Weekday(day: "Monday", enabled: true), Weekday(day: "Tuesday", enabled: true), Weekday(day: "Wednesday", enabled: true), Weekday(day: "Thursday", enabled: true), Weekday(day: "Friday", enabled: true), Weekday(day: "Saturday", enabled: false)]
+    var AlarmDays =
+        [Weekday(day: "Sunday", enabled: false),
+         Weekday(day: "Monday", enabled: true),
+         Weekday(day: "Tuesday", enabled: true),
+         Weekday(day: "Wednesday", enabled: true),
+         Weekday(day: "Thursday", enabled: true),
+         Weekday(day: "Friday", enabled: true),
+         Weekday(day: "Saturday", enabled: false)]
+    
     var AlarmTime:String = "9:00 AM"
+    
+    let defaults = UserDefaults.standard
     
     
     
@@ -33,6 +46,7 @@ class Main: UIViewController, CLLocationManagerDelegate, MFMessageComposeViewCon
     @IBAction func calendarBtn(_ sender: Any) {
         performSegue(withIdentifier: "calendar", sender: self)
     }
+    @IBOutlet weak var currentTimeLbl: UILabel!
     
     @IBAction func setHomeBtn(_ sender: Any) {
         if(HomeLocation == nil){
@@ -67,6 +81,22 @@ class Main: UIViewController, CLLocationManagerDelegate, MFMessageComposeViewCon
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        /* What the code below does is create a timer that checks every minute if
+         the day is correct and if the time is correct. It takes this timer
+         and adds it to the runloop so it constantly runs*/
+        let checkLateTimer = Timer.scheduledTimer(timeInterval: 30.0, target: self, selector: #selector(checkIfAlarm), userInfo: nil, repeats: true)
+        RunLoop.main.add(checkLateTimer, forMode: .common)
+        
+        /* Originally I had this in viewDidAppear but I think it would add a timer to the runloop
+           every time the view appeared which I didn't want.*/
+        
+        
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(applicationWillResignActive), name: UIApplication.willResignActiveNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(applicationDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
+        
+        
+        
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
@@ -75,29 +105,34 @@ class Main: UIViewController, CLLocationManagerDelegate, MFMessageComposeViewCon
         manager.requestAlwaysAuthorization()
         manager.startUpdatingLocation()
         print(AlarmTime)
-        /* What the code below does is create a timer that checks every minute if
-           the day is correct and if the time is correct. It takes this timer
-           and adds it to the runloop so it constantly runs*/
-        let checkLateTimer = Timer.scheduledTimer(timeInterval: 60.0, target: self, selector: #selector(checkIfAlarm), userInfo: nil, repeats: true)
-        RunLoop.main.add(checkLateTimer, forMode: .common)
+        /* I have the below update in the timer but I also have it here because
+           the timer checks every minute which doesnt check immediately*/
+        let date = Date().description(with: .current)
+        var strs = date.description.components(separatedBy: " ")
+        var currentTime = strs[5]
+        currentTime.removeLast(3)
+        currentTime += " "
+        currentTime += strs[6]
+        currentTimeLbl.text = currentTime
         //print(AvailContacts ?? "no c")
         //print(MessageToSend)
     }
     @objc func checkIfAlarm(){
-        print("minute passed")
+        print("30 seconds passed")
+        let date = Date().description(with: .current)
+        var strs = date.description.components(separatedBy: " ")
+        var currentTime = strs[5]
+        currentTime.removeLast(3)
+        currentTime += " "
+        currentTime += strs[6]
+        currentTimeLbl.text = currentTime
         if(compareAlarmToDay()){
             print("Correct day")
-            let date = Date().description(with: .current)
-            var strs = date.description.components(separatedBy: " ")
-            var currentTime = strs[5]
-            currentTime.removeLast(3)
-            currentTime += " "
-            currentTime += strs[6]
-            print(currentTime)
+            //print(currentTime)
             if(currentTime == AlarmTime){
                 let location = manager.location!
                 let currentLocation = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
-                if(currentLocation.latitude == HomeLocation!.coordinate.latitude && currentLocation.longitude == HomeLocation!.coordinate.longitude){
+                if(checkCurrLocationToHome(location: currentLocation)){
                     print("locations are the same")
                     let messageVC = MFMessageComposeViewController()
                     messageVC.body = MessageToSend
@@ -113,6 +148,9 @@ class Main: UIViewController, CLLocationManagerDelegate, MFMessageComposeViewCon
                         messageVC.messageComposeDelegate = self
                         if(canSendText()){
                             self.present(messageVC, animated: true, completion: nil)
+                            /*This is a bandaid to the problem that it will try to send
+                              a message twice because the timer checks every 30 seconds*/
+                            //sleep(60)
                         }
                     }
                 }else{
@@ -120,6 +158,37 @@ class Main: UIViewController, CLLocationManagerDelegate, MFMessageComposeViewCon
                 }
             }
         }
+    }
+    
+    func checkCurrLocationToHome(location: CLLocationCoordinate2D) -> Bool{
+        var retMe = false
+        let currLat = String(location.latitude)
+        let currLon = String(location.longitude)
+        let homeLat:String = HomeLocation?.coordinate.latitude.description ?? ""
+        let homeLon:String = HomeLocation?.coordinate.longitude.description ?? ""
+        //print(currLat + " " + currLon)
+        //print(homeLat + " " + homeLon)
+        let goodCLat = currLat.prefix(7)
+        let goodCLon = currLon.prefix(7)
+        let goodHLat = homeLat.prefix(7)
+        let goodHLon = homeLon.prefix(7)
+        //print(goodCLat + " " + goodCLon)
+        //print(goodHLat + " " + goodHLon)
+        let currLatLast: Int = Int(String(goodCLat.last!)) ?? -1
+        let currLonLast: Int = Int(String(goodCLon.last!)) ?? -1
+        let homeLatLast: Int = Int(String(goodHLat.last!)) ?? -1
+        let homeLonLast: Int = Int(String(goodHLon.last!)) ?? -1
+        /*
+        print("currlat currlon homelat homelon")
+        print(currLatLast)
+        print(currLonLast)
+        print(homeLatLast)
+        print(homeLonLast) */
+        if(abs(currLatLast - homeLatLast) <= 3 && abs(currLonLast - homeLonLast) <= 3){
+            retMe = true
+        }
+        
+        return retMe
     }
     
     func canSendText() -> Bool{
@@ -177,6 +246,51 @@ class Main: UIViewController, CLLocationManagerDelegate, MFMessageComposeViewCon
             break
         
         }
+    }
+    
+    //Below is more advanced running in background and persistance
+    
+    
+    /* The function below is the function that is called before the app is shutdown
+       I'm using it to save data */
+    @objc func applicationWillResignActive(){
+        print("closing time")
+        let lat = HomeLocation?.coordinate.latitude.description
+        let long = HomeLocation?.coordinate.longitude.description
+        defaults.set(lat, forKey: "homeLat")
+        defaults.set(long, forKey: "homeLong")
+        /* I tried encoding the MKPointAnnotation of HomeLocation but it wouldn't let me
+           but it does let me encode strings with no problems */
+        defaults.set(try? PropertyListEncoder().encode(AvailContacts), forKey:"availableContacts")
+        defaults.set(MessageToSend, forKey: "messageToSend")
+        defaults.set(try? PropertyListEncoder().encode(AlarmDays), forKey: "alarmDays")
+        defaults.set(AlarmTime, forKey: "alarmTime")
+        defaults.synchronize()
+    }
+    
+    /* The function below is the function that is called when the app is start from being
+       closed. I'm using it to load data that was saved before it was quit*/
+    @objc func applicationDidBecomeActive(){
+        let lat = defaults.value(forKey: "homeLat") as? String ?? ""
+        let long = defaults.value(forKey: "homeLong") as? String ?? ""
+        //print(lat + " " + long)
+        let latitude = (lat as NSString).doubleValue
+        let longitude = (long as NSString).doubleValue
+        let coord = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        HomeLocation = MKPointAnnotation()
+        HomeLocation?.coordinate = coord
+        if(coord.latitude != 0.0 && coord.longitude != 0.0){
+            HomeLocation?.title = "Home"
+            self.map.addAnnotation(HomeLocation!) /* for some reason the map removes the pin on shutdown*/
+        }
+        if let contactData = defaults.value(forKey: "availableContacts") as? Data{
+            AvailContacts = try? PropertyListDecoder().decode(Array<Person>.self, from: contactData)
+        }
+        MessageToSend = defaults.value(forKey: "messageToSend") as? String ?? ""
+        if let daysData = defaults.value(forKey: "alarmDays") as? Data{
+            AlarmDays = try! PropertyListDecoder().decode(Array<Weekday>.self, from: daysData)
+        }
+        AlarmTime = defaults.value(forKey: "alarmTime") as? String ?? "9:00 AM"
     }
 
 

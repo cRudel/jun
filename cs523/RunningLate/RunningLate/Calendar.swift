@@ -5,6 +5,10 @@
 //  Created by Chris Rudel on 4/30/19.
 //  Copyright © 2019 Chris Rudel. All rights reserved.
 //
+//  CS 523
+//  Professor Damopolous
+//  Running Late - Main.swift
+//  I pledge my honor that I have abided by the Stevens Honor System - Christopher Rudel
 
 import UIKit
 
