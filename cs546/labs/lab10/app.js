@@ -1,6 +1,7 @@
 const express = require("express");
 const session = require('express-session');
 const bodyParser = require("body-parser");
+const cookie = require("cookie-parser");
 const app = express();
 const static = express.static(__dirname + "/public");
 const configRoutes = require("./routes");
@@ -34,14 +35,16 @@ const rewriteUnsupportedBrowserMethods = (req, res, next) => {
   
 
 app.use("/", static);
-app.use(bodyParser.json);
+app.use(cookie);
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use(rewriteUnsupportedBrowserMethods);
 app.use(session({
     name: 'AuthCookie',
     secret: 'club penguin',
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: true,
+    cookie: {secure: false}
 }));
 
 app.engine("handlebars", handlebarsInstance.engine);

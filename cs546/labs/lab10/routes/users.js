@@ -1,11 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const users = require("../data/users");
+const auth = require("../middleware/auth");
 
 router.get("/", (req,res) =>{
     if(req.cookies.name === "AuthCookie") {
         res.redirect("/private");
     }else{
+        console.log("here");
         res.render("users/home", { title: "Welcome to the login page"});
     }
 });
@@ -29,6 +31,20 @@ router.post("/login", (req, res, next) =>{
         });
     }
 });
+
+router.get("/private", auth, (req, res, next) => {
+    let user = req.session.user;
+    res.render("users/info",
+    {
+        user,
+        title: `Hello ${user.firstName} ${user.lastName}`
+    });
+});
+
+router.get("/logout", (req,res, next) =>{
+    res.clearCookie('name');
+    res.redirect("/");
+})
 
 
 module.exports = router;

@@ -4,6 +4,7 @@ const constructorMethod = app => {
     app.use("/", userRoutes);
 
     app.use("*", (req, res) => {
+        console.log("redirect home");
         res.redirect("/");
     });
 };
