@@ -1,4 +1,4 @@
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const users = [
     {
       _id: 0,
@@ -30,21 +30,21 @@ const users = [
   ];
 
 const checkUsername = function checkUsername(userN){
-    for (let person in users){
+    let retMe = false;
+    for (let person of users){
         if(person.username === userN){
-            return true;
-        }else{
-            return false;
+            retMe = true;
         }
     }
+    return retMe;
 }
 
-const checkPassword = function checkPassword(userN, passW){
+const checkPassword = async function checkPassword(userN, passW){
     let myObj = {};
-    for (let person in users){
+    for (let person of users){
         if(person.username === userN){
-            if(bcrypt.compareSync(passW, person.hashedPassword)){ //compares provided password to hashed password
-                myObj = {status: true, person};
+            if(await bcrypt.compare(passW, person.hashedPassword)){ //compares provided password to hashed password
+                myObj = {status: true, user: person};
                 return myObj;
             }else{
                 myObj = {status: false, message: "Incorrect password!"};
@@ -55,6 +55,8 @@ const checkPassword = function checkPassword(userN, passW){
     myObj = {status: false, message: "User not found."};
     return myObj;
 }
+
+
 
 module.exports = {
     checkUsername,

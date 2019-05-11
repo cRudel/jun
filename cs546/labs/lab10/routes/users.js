@@ -7,41 +7,53 @@ router.get("/", (req,res) =>{
     if(req.cookies.name === "AuthCookie") {
         res.redirect("/private");
     }else{
-        console.log("here");
-        res.render("users/home", { title: "Welcome to the login page"});
+        res.render("users/home", { title: "Welcome to the login screen"});
     }
 });
 
-router.post("/login", (req, res, next) =>{
+router.post("/login", async (req, res) =>{
     let userN = req.body.username;
     let passW = req.body.password;
 
     if(userN && passW){
         uResult = users.checkUsername(userN);
-        pResult = users.checkPassword(userN, passW);
-
+        pResult = await users.checkPassword(userN, passW);
         if(uResult && pResult.status){
-
+            let {_id, username, firstName, lastName, Profession, Bio} = pResult.user;
+            res.cookie("name", "AuthCookie");
+            let user = {_id, username, firstName, lastName, Profession, Bio};
+            req.session.user = user;
+            res.redirect("/private");
+        }else{
+            res.render("users/home", {
+                title: "Welcome to the login page",
+                message: "Wrong username or password",
+                status: false
+            });
         }
     } else{
         res.render("users/home", {
-            title: "Login Screen",
-            message: "Wrong username or password",
+            title: "Welcome to the login page",
+            message: "No username or password provided",
             status: false
         });
+    } 
+});
+
+router.get("/private", auth, (req, res) => {
+    let user = req.session.user;
+    if(user){
+        res.render("users/info",
+        {
+            user,
+            title: `Welcome ${user.firstName} ${user.lastName}`
+        });
+    }else{
+        res.render("users/home", { title: "Welcome to the login page"});
     }
 });
 
-router.get("/private", auth, (req, res, next) => {
-    let user = req.session.user;
-    res.render("users/info",
-    {
-        user,
-        title: `Hello ${user.firstName} ${user.lastName}`
-    });
-});
-
-router.get("/logout", (req,res, next) =>{
+router.get("/logout", (req,res) =>{
     res.clearCookie('name');
     res.redirect("/");
 })

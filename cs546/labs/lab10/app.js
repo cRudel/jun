@@ -35,7 +35,7 @@ const rewriteUnsupportedBrowserMethods = (req, res, next) => {
   
 
 app.use("/", static);
-app.use(cookie);
+app.use(cookie());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use(rewriteUnsupportedBrowserMethods);
