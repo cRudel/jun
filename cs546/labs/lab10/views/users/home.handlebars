@@ -2,29 +2,28 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Home</title>
     </head>
     <body>
-        <div class="row">
-            <div class="col-sm-12">
-                <form id="login" method="POST" action="/login">
+        <div class="col-sm-12">
+            <form id="login" method="POST" action="/login">
+                <div class="form-group">
+                    <label for="usrnm">Username</label>
+                    <input type="text" class="form-input" id="usrnm" name="username" placeholder="Enter username"><br>
+                    <label for="pwd">Password</label>
+                    <input type="password" class="form-input" id="pwd" name="password" placeholder="Enter password">
                     <div class="form-group">
-                        <label for="usrnm">Username</label>
-                        <input type="text" class="form-input" id="usrnm" name="username" placeholder="Enter username"><br>
-                        <label for="pwd">Password</label>
-                        <input type="password" class="form-input" id="pwd" name="password" placeholder="Enter password"><br>
-
-                        <div class="form-group">
-                            <button type="submit" class="btn">login</button>
-                        </div>
-                        {{#unless status}}
-                            <p>{{message}}</p>
-                        {{/unless}}
+                        <button type="submit" class="button">Sign in</button>
                     </div>
-                </form>
-            </div>
+                    {{#if status}}
+                    <p></p>
+                    {{else}}
+                        <p>{{message}}</p>
+                    {{/if}}
+                </div>
+            </form>
         </div>
     </body>
 </html>

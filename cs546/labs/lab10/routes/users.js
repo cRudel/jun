@@ -7,6 +7,16 @@ router.get("/", (req,res) =>{
     if(req.cookies.name === "AuthCookie") {
         res.redirect("/private");
     }else{
+        let str = new Date().toUTCString();
+        str = str.concat(" ");
+        str = str.concat(req.method);
+        str = str.concat(" ");
+        str = str.concat(req.originalUrl);
+        str = str.concat(" ");
+        str = str.concat("(Non-Authenticated User)");
+        console.log(str);
+        /* I'm doing the above because he wanted us to have the request route, meaning
+            that it would show up for /, /login and /private */
         res.render("users/home", { title: "Welcome to the login screen"});
     }
 });

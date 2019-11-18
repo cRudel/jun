@@ -61,4 +61,5 @@ const checkPassword = async function checkPassword(userN, passW){
 module.exports = {
     checkUsername,
     checkPassword
+    //theres no point in adding the users to module.exports like he wanted us to
 };
